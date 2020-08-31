@@ -31,7 +31,7 @@ clean_enduse <- function(data){
                   #add space before uppercase letter when directly after lowercase
                   enduse = dplyr::case_when(
                     stringr::str_detect(enduse, "(?<=[a-z])[A-Z]") ~
-                      stringr::str_c(str_split(enduse, "(?<=[a-z])[A-Z]", simplify = TRUE)[, 1], " ",
+                      stringr::str_c(stringr::str_split(enduse, "(?<=[a-z])[A-Z]", simplify = TRUE)[, 1], " ",
                                      stringr::str_split(enduse, "[a-z](?=[A-Z])", simplify = TRUE)[, 2]),
                     TRUE ~ enduse),
 
