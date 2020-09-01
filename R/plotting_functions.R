@@ -167,7 +167,7 @@ plot_stacked_enduses <- function(baseline, proposed = NULL, title = NULL, by_fue
     ggplot2::geom_col(identity="stat")+
 
     #add pattern if dual-fuel
-    {if("fuel" %in% colnames(data))ggpatterm::geom_col_pattern(aes(pattern = fuel), identity="stat", pattern_fill = "white", pattern_color=NA, pattern_spacing = .02, pattern_density = .1, size = 1.2)}+
+    {if("fuel" %in% colnames(data))ggpattern::geom_col_pattern(aes(pattern = fuel), identity="stat", pattern_fill = "white", pattern_color=NA, pattern_spacing = .02, pattern_density = .1, size = 1.2)}+
     {if("fuel" %in% colnames(data))ggpattern::scale_pattern_manual(values = c("none", "stripe"))}+
     ggplot2::scale_fill_manual(values = plot_colors(data))+
     ggplot2::scale_color_manual(values = plot_colors(data))+
