@@ -13,51 +13,30 @@ knitr::opts_chunk$set(
 )
 ```
 
-# ResourceRefocus
-
-<!-- badges: start -->
-<!-- badges: end -->
-
-The goal of ResourceRefocus is to ...
-
-## Installation
-
-You can install the released version of ResourceRefocus from [CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("ResourceRefocus")
-```
-
-And the development version from [GitHub](https://github.com/) with:
-
-``` r
-# install.packages("devtools")
-devtools::install_github("jkeast/ResourceRefocus")
-```
 # Resource Refocus Summer 2020 <img src="Resource-Refocus-Secondary-Logo-RGB-Borderless.png" align="right" height=130/>
 
 ## Guide to Using Functions
 
 ### Set Up
 
-First either clone this repository (see section 15.2 of [Happy Git and GitHub for the UseR](https://happygitwithr.com/new-github-first.html#new-github-first)) or copy the code from all files in the functions folder. Run all the code from these files to add the functions to your local environment. You may also need to install the following functions:
+Run the following code to install the package
 
 ```{r}
-# install.packages("readr")
-# install.packages("dplyr")
-# install.packages("ggplot2")
-# install.packages("reshape2")
-# install.packages("stringr")
-# install.packages("extrafont")
-# install.packages("magrittr")
-# install.packages("purrr")
-# install.packages("remotes")
-#remotes::install_github("coolbutuseless/ggpattern")
+# install.packages("devtools")
+# devtools::install_github("jkeast/ResourceRefocus")
+
+library(ResourceRefocus)
 ```
 
 
 To ensure the fonts are consitant with the Resource Refocus style guide, make sure the "Muli" and "Roboto" fonts are installed to your computer and install and library the `extrafont` package. Then, for each font family run
-`ttf_import("[Path to font]")` and finally `extrafont::loadfonts(device = "win")`.
+`ttf_import("[Path to font]")` and finally 
+
+```{r, message=FALSE}
+extrafont::loadfonts(device = "win")
+```
+
+
 
 <!-- badges: start -->
 <!-- badges: end -->

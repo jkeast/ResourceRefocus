@@ -1,61 +1,29 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ResourceRefocus
-
-<!-- badges: start -->
-
-<!-- badges: end -->
-
-The goal of ResourceRefocus is to …
-
-## Installation
-
-You can install the released version of ResourceRefocus from
-[CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("ResourceRefocus")
-```
-
-And the development version from [GitHub](https://github.com/) with:
-
-``` r
-# install.packages("devtools")
-devtools::install_github("jkeast/ResourceRefocus")
-```
-
 # Resource Refocus Summer 2020 <img src="Resource-Refocus-Secondary-Logo-RGB-Borderless.png" align="right" height=130/>
 
 ## Guide to Using Functions
 
 ### Set Up
 
-First either clone this repository (see section 15.2 of [Happy Git and
-GitHub for the
-UseR](https://happygitwithr.com/new-github-first.html#new-github-first))
-or copy the code from all files in the functions folder. Run all the
-code from these files to add the functions to your local environment.
-You may also need to install the following functions:
+Run the following code to install the package
 
 ``` r
-# install.packages("readr")
-# install.packages("dplyr")
-# install.packages("ggplot2")
-# install.packages("reshape2")
-# install.packages("stringr")
-# install.packages("extrafont")
-# install.packages("magrittr")
-# install.packages("purrr")
-# install.packages("remotes")
-#remotes::install_github("coolbutuseless/ggpattern")
+# install.packages("devtools")
+# devtools::install_github("jkeast/ResourceRefocus")
+
+library(ResourceRefocus)
 ```
 
 To ensure the fonts are consitant with the Resource Refocus style guide,
 make sure the “Muli” and “Roboto” fonts are installed to your computer
 and install and library the `extrafont` package. Then, for each font
 family run `ttf_import("[Path to font]")` and finally
-`extrafont::loadfonts(device = "win")`.
+
+``` r
+extrafont::loadfonts(device = "win")
+```
 
 <!-- badges: start -->
 
@@ -222,148 +190,21 @@ it calls automatically.
 
 ``` r
 plot_comps("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", title = "Placeholder Title")
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family not
-#> found in Windows font database
-
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family not
-#> found in Windows font database
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family not
-#> found in Windows font database
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-#> font family not found in Windows font database
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-#> font family not found in Windows font database
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
 
 ``` r
 plot_comps("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", by_month = NULL, title = "Placeholder Title")
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-#> font family not found in Windows font database
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-2.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-8-2.png" width="100%" />
 
 ``` r
 plot_comps("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", by_month = NULL, title = "Placeholder Title", bw = TRUE)
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-#> font family not found in Windows font database
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-3.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-8-3.png" width="100%" />
 
 #### Plot End-use Averages
 
@@ -380,142 +221,21 @@ it calls automatically.
 
 ``` r
 plot_enduse_avgs("data/sample_baseline_design.csv", title = "Placeholder Title")
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-#> font family not found in Windows font database
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-#> font family not found in Windows font database
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
 ```
 
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
 
 ``` r
 plot_enduse_avgs("data/sample_baseline_design.csv", by_month = NULL, title = "Placeholder Title")
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-#> font family not found in Windows font database
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
 ```
 
-<img src="man/figures/README-unnamed-chunk-8-2.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-9-2.png" width="100%" />
 
 ``` r
 plot_enduse_avgs("data/sample_baseline_design.csv", title = "Placeholder Title", by_month = NULL, bw = TRUE)
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-#> font family not found in Windows font database
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
 ```
 
-<img src="man/figures/README-unnamed-chunk-8-3.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-9-3.png" width="100%" />
 
 #### Plot Dual-Fuel Averages
 
@@ -530,54 +250,9 @@ it calls automatically.
 
 ``` r
 plot_dualfuel_avgs("data/sample_baseline_dual-fuel_design.csv", by_month = NULL)
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-#> font family not found in Windows font database
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
 ```
 
-<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
 
 #### End-use Averages Barcharts
 
@@ -599,158 +274,31 @@ it calls automatically.
 ``` r
 plot_stacked_enduses("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", title = "Placeholder Title", by_month = NULL, by_fuel = NULL)
 #> Warning: Ignoring unknown parameters: identity
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-#> font family not found in Windows font database
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
 ```
 
-<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
 
 ``` r
 plot_stacked_enduses("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", title = "Placeholder Title", by_fuel = NULL)
 #> Warning: Ignoring unknown parameters: identity
-
-#> Warning: font family not found in Windows font database
-
-#> Warning: font family not found in Windows font database
-
-#> Warning: font family not found in Windows font database
-
-#> Warning: font family not found in Windows font database
-
-#> Warning: font family not found in Windows font database
-
-#> Warning: font family not found in Windows font database
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-#> font family not found in Windows font database
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-#> font family not found in Windows font database
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
 ```
 
-<img src="man/figures/README-unnamed-chunk-10-2.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-11-2.png" width="100%" />
 
 ``` r
 plot_stacked_enduses("data/sample_baseline_dual-fuel_design.csv", title = "Placeholder Title", by_month = NULL)
 #> Warning: Ignoring unknown parameters: identity
+
 #> Warning: Ignoring unknown parameters: identity
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-#> font family not found in Windows font database
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
 ```
 
-<img src="man/figures/README-unnamed-chunk-10-3.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-11-3.png" width="100%" />
 
 ``` r
 plot_stacked_enduses("data/sample_baseline_dual-fuel_design.csv", title = "Placeholder Title")
 #> Warning: Ignoring unknown parameters: identity
+
 #> Warning: Ignoring unknown parameters: identity
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-#> font family not found in Windows font database
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-#> font family not found in Windows font database
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
-
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-#> family not found in Windows font database
 ```
 
-<img src="man/figures/README-unnamed-chunk-10-4.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-11-4.png" width="100%" />
