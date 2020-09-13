@@ -249,7 +249,7 @@ and passes `by_month` and `conversion_factor` to `clean_data()`, which
 it calls automatically.
 
 ``` r
-plot_dualfuel_avgs("data/sample_baseline_dual-fuel_design.csv", by_month = NULL)
+plot_dualfuel_avgs("data/sample_baseline_dual-fuel_design.csv", title = "Placeholder Title", by_month = NULL)
 ```
 
 <img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />

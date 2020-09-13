@@ -113,7 +113,7 @@ plot_dualfuel_avgs <- function(csv, title = NULL, ...){
 
     #make breaks align with day breaks and clean labels
     ggplot2::scale_x_continuous(breaks=c(1, 6, 12, 18, 24))+
-    ggplot2::labs(title = "title", subtitle = "Average Hourly Consumption by End Use --- Dual-Fuel Model", y = "kBtu", color = NULL, linetype = NULL) +
+    ggplot2::labs(title = title, subtitle = "Average Hourly Consumption by End Use – Dual-Fuel Model", y = "kBtu", color = NULL, linetype = NULL) +
 
     #customize fonts to those in RR style guide
     ggplot2::theme(text = ggplot2::element_text(family = "Muli"),
@@ -156,7 +156,7 @@ plot_stacked_enduses <- function(baseline, proposed = NULL, title = NULL, by_fue
       TRUE ~ mean_kWh)) %>%
     dplyr::select(-c(mean_kWh))
 
-  #orders from lease energy intensive to most
+  #orders from least energy intensive to most
   enduse_order <- data %>%
     dplyr::group_by(enduse, {{by_fuel}}) %>%
     dplyr::summarize(energy = mean(mean_energy)) %>%

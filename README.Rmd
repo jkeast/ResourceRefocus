@@ -134,7 +134,7 @@ plot_enduse_avgs("data/sample_baseline_design.csv", title = "Placeholder Title",
 and passes `by_month` and `conversion_factor` to `clean_data()`, which it calls automatically.
 
 ```{r, message=FALSE}
-plot_dualfuel_avgs("data/sample_baseline_dual-fuel_design.csv", by_month = NULL)
+plot_dualfuel_avgs("data/sample_baseline_dual-fuel_design.csv", title = "Placeholder Title", by_month = NULL)
 ```
 
 #### End-use Averages Barcharts
