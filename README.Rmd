@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Resource Refocus Summer 2020 <img src="Resource-Refocus-Secondary-Logo-RGB-Borderless.png" align="right" height=130/>
+# Resource Refocus R Data Visualization Package for 8760 Building End-Use Level Data <img src="Resource-Refocus-Secondary-Logo-RGB-Borderless.png" align="right" height=130/>
 
 ## Guide to Using Functions
 
