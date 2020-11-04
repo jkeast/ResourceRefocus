@@ -29,7 +29,7 @@ library(ResourceRefocus)
 ```
 
 
-To ensure the fonts are consitant with the Resource Refocus style guide, make sure the "Muli" and "Roboto" fonts are installed to your computer and install and library the `extrafont` package. Then, for each font family run
+To ensure the fonts are consistent with the Resource Refocus style guide, make sure the "Muli" and "Roboto" fonts are installed to your computer and install and library the `extrafont` package. Then, for each font family run
 `ttf_import("[Path to font]")` and finally 
 
 ```{r, message=FALSE}
