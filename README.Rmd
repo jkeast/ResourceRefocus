@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 
 ### Set Up
 
-Run the following code to install the package
+Run the following code to install the package 
 
 ```{r}
 # install.packages("devtools")

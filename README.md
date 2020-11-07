@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Resource Refocus Summer 2020 <img src="Resource-Refocus-Secondary-Logo-RGB-Borderless.png" align="right" height=130/>
+# Resource Refocus R Data Visualization Package for 8760 Building End-Use Level Data <img src="Resource-Refocus-Secondary-Logo-RGB-Borderless.png" align="right" height=130/>
 
 ## Guide to Using Functions
 
@@ -16,10 +16,10 @@ Run the following code to install the package
 library(ResourceRefocus)
 ```
 
-To ensure the fonts are consitant with the Resource Refocus style guide,
-make sure the “Muli” and “Roboto” fonts are installed to your computer
-and install and library the `extrafont` package. Then, for each font
-family run `ttf_import("[Path to font]")` and finally
+To ensure the fonts are consistent with the Resource Refocus style
+guide, make sure the “Muli” and “Roboto” fonts are installed to your
+computer and install and library the `extrafont` package. Then, for each
+font family run `ttf_import("[Path to font]")` and finally
 
 ``` r
 extrafont::loadfonts(device = "win")
