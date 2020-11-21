@@ -136,8 +136,8 @@ clean_data <- function(csv, by_month = month, by_enduse = enduse, by_hour = Hour
 
     #select/group by month and enduse unless otherwise specified
  data %>%
-    mutate(enduse = case_when(
-      enduse %in% unique(filter(data, fuel == "Electricity")$enduse) & fuel == "Gas" ~ str_c(enduse, "-Gas"),
+    dplyr::mutate(enduse = case_when(
+      enduse %in% unique(dplyr::filter(data, fuel == "Electricity")$enduse) & fuel == "Gas" ~ stringr::str_c(enduse, "-Gas"),
       TRUE ~ enduse)) %>%
     dplyr::select(value, {{by_hour}}, {{by_month}}, {{by_enduse}}, {{by_fuel}}) %>%
     dplyr::group_by({{by_hour}}, {{by_month}}, {{by_enduse}}, {{by_fuel}}) %>%
