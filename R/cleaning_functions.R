@@ -60,11 +60,11 @@ to_remove <- function(data){
     dplyr::summarize(mean_kWh = sum(value))
 
   #extract sums and round (accounts for slight differences)
-  electricity <- signif(dplyr::filter(data2, fuel == "Electricity")$mean_kWh, 5)
   facility <- signif(dplyr::filter(data2, fuel == "Facility")$mean_kWh, 5)
+  all_other <- signif(dplyr::filter(data2, fuel != "Facility")$mean_kWh, 5)
 
   #determine if "facility" equals sum of electric end uses
-  if(electricity == facility){
+  if(all_other == facility){
     message("`to_remove()` removing column summing electric end uses from data.")
     return("Facility")
   }else{
@@ -135,9 +135,9 @@ clean_data <- function(csv, by_month = month, by_enduse = enduse, by_hour = Hour
 
 
     #select/group by month and enduse unless otherwise specified
- data %>% 
+ data %>%
     mutate(enduse = case_when(
-      enduse %in% unique(filter(data, fuel == "Electricity")$enduse) & fuel == "Gas" ~ str_c(enduse, "-Gas"),  
+      enduse %in% unique(filter(data, fuel == "Electricity")$enduse) & fuel == "Gas" ~ str_c(enduse, "-Gas"),
       TRUE ~ enduse)) %>%
     dplyr::select(value, {{by_hour}}, {{by_month}}, {{by_enduse}}, {{by_fuel}}) %>%
     dplyr::group_by({{by_hour}}, {{by_month}}, {{by_enduse}}, {{by_fuel}}) %>%
