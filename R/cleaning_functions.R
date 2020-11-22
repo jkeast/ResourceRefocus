@@ -56,20 +56,13 @@ clean_enduse <- function(data){
 
 to_remove <- function(data){
   data2 <- data %>%
+    filter(stringr::str_detect(enduse, "Electricity")) %>%
     dplyr::group_by(fuel) %>%
-    dplyr::summarize(mean_kWh = sum(value))
-
-  #extract sums and round (accounts for slight differences)
-  facility <- signif(dplyr::filter(data2, fuel == "Facility")$mean_kWh, 5)
-  electricity <- signif(dplyr::filter(data2, fuel == "Electricity")$mean_kWh, 5)
-  all <- signif(sum(dplyr::filter(data2, fuel != "Facility")$mean_kWh), 5)
+    dplyr::summarize(mean_kWh = signif(sum(value), 5))
 
   #determine if "facility" equals sum of electric end uses
-  if(electricity == facility){
+  if(dplyr::filter(data2, fuel == "Electricity")$mean_kWh == dplyr::filter(data2, fuel == "Facility")$mean_kWh){
     message("`to_remove()` removing row summing electric end uses from data.")
-    return("Facility")
-  }else if(all == facility){
-    message("`to_remove()` removing rows summing end uses from data.")
     return("Facility")
   }else{
     return(NULL)
