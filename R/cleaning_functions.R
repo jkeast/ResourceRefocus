@@ -61,11 +61,15 @@ to_remove <- function(data){
 
   #extract sums and round (accounts for slight differences)
   facility <- signif(dplyr::filter(data2, fuel == "Facility")$mean_kWh, 5)
-  all_other <- signif(dplyr::filter(data2, fuel != "Facility")$mean_kWh, 5)
+  electricity <- signif(dplyr::filter(data2, fuel == "Electricity")$mean_kWh, 5)
+  all <- signif(sum(dplyr::filter(data2, fuel != "Facility")$mean_kWh), 5)
 
   #determine if "facility" equals sum of electric end uses
-  if(all_other == facility){
-    message("`to_remove()` removing column summing electric end uses from data.")
+  if(electricity == facility){
+    message("`to_remove()` removing row summing electric end uses from data.")
+    return("Facility")
+  }else if(all == facility){
+    message("`to_remove()` removing rows summing end uses from data.")
     return("Facility")
   }else{
     return(NULL)
