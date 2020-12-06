@@ -104,7 +104,9 @@ and passes `by_month` and `conversion_factor` to `clean_data()`, which it calls 
 
 ```{r, message=FALSE}
 plot_comps("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", title = "Placeholder Title")
+plot_comps("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", title = "Placeholder Title", result = "Emissions")
 plot_comps("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", by_month = NULL, title = "Placeholder Title")
+plot_comps("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", by_month = NULL, title = "Placeholder Title", result = "Emissions")
 plot_comps("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", by_month = NULL, title = "Placeholder Title", bw = TRUE)
 ```
 
@@ -121,6 +123,7 @@ and passes `by_month` and `conversion_factor` to `clean_data()`, which it calls 
 ```{r, message=FALSE}
 plot_enduse_avgs("data/sample_baseline_design.csv", title = "Placeholder Title")
 plot_enduse_avgs("data/sample_baseline_design.csv", by_month = NULL, title = "Placeholder Title")
+plot_enduse_avgs("data/sample_baseline_design.csv", by_month = NULL, title = "Placeholder Title", result = "Emissions")
 plot_enduse_avgs("data/sample_baseline_design.csv", title = "Placeholder Title", by_month = NULL, bw = TRUE)
 ```
 
@@ -135,6 +138,7 @@ and passes `by_month` and `conversion_factor` to `clean_data()`, which it calls 
 
 ```{r, message=FALSE}
 plot_dualfuel_avgs("data/sample_baseline_dual-fuel_design.csv", title = "Placeholder Title", by_month = NULL)
+plot_dualfuel_avgs("data/sample_baseline_dual-fuel_design.csv", title = "Placeholder Title", result = "Emissions", by_month = NULL)
 ```
 
 #### End-use Averages Barcharts
@@ -150,6 +154,7 @@ and passes `by_month` and `conversion_factor` to `clean_data()`, which it calls 
 
 ```{r, message=FALSE}
 plot_stacked_enduses("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", title = "Placeholder Title", by_month = NULL, by_fuel = NULL)
+plot_stacked_enduses("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", title = "Placeholder Title", by_month = NULL, by_fuel = NULL, result = "Emissions")
 plot_stacked_enduses("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", title = "Placeholder Title", by_fuel = NULL)
 plot_stacked_enduses("data/sample_baseline_dual-fuel_design.csv", title = "Placeholder Title", by_month = NULL)
 plot_stacked_enduses("data/sample_baseline_dual-fuel_design.csv", title = "Placeholder Title")

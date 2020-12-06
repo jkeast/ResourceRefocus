@@ -51,12 +51,12 @@ clean_enduse <- function(data){
 #' @title to_remove
 #' @importFrom dplyr %>%
 #' @param data a dataframe with a fuel column (column name must match exactly). Column type must be chr.
-#' @return String with enduse fuel to remove or NULL
+#' @return String with fuel to remove or NULL
 #' @export
 
 to_remove <- function(data){
   data2 <- data %>%
-    filter(stringr::str_detect(enduse, "Electricity")) %>%
+    dplyr::filter(stringr::str_detect(enduse, "Electricity")) %>%
     dplyr::group_by(fuel) %>%
     dplyr::summarize(mean_kWh = signif(sum(value), 5))
 
@@ -107,8 +107,11 @@ convert <- function(num, conversion_factor = 3600000){
 clean_data <- function(csv, by_month = month, by_enduse = enduse, by_hour = Hour, by_fuel = fuel, ...) {
   data <- readr::read_csv(csv) %>%
 
+    #join with emissions conversions
+    dplyr::full_join(readr::read_csv("data/GHG_index_E3_2030.csv")) %>%
+
     #transform to long data
-    reshape2::melt(id.vars = c("Date/Time"), variable.name = "enduse") %>%
+    reshape2::melt(id.vars = c("Date/Time", "tonne CO2-e/MWh", "tonne CO2-e/therm"), variable.name = "enduse") %>%
 
 
     dplyr::mutate(
@@ -121,7 +124,12 @@ clean_data <- function(csv, by_month = month, by_enduse = enduse, by_hour = Hour
            fuel = stringr::str_extract(enduse, "[\\w]*(?= \\[)"),
 
            #convert units appropriately
-           value = convert(value, ...))
+           value = convert(value, ...),
+
+           CO2e = dplyr::case_when(
+             fuel == "Gas" ~ convert(value, 105480400)*`tonne CO2-e/therm`*2204.6,
+             TRUE ~ convert(value)*1000*`tonne CO2-e/MWh`*2204.6))
+
 
   remove <- to_remove(data)
 
@@ -136,9 +144,9 @@ clean_data <- function(csv, by_month = month, by_enduse = enduse, by_hour = Hour
     dplyr::mutate(enduse = dplyr::case_when(
       enduse %in% unique(dplyr::filter(data, fuel == "Electricity")$enduse) & fuel == "Gas" ~ stringr::str_c(enduse, "-Gas"),
       TRUE ~ enduse)) %>%
-    dplyr::select(value, {{by_hour}}, {{by_month}}, {{by_enduse}}, {{by_fuel}}) %>%
+    dplyr::select(value, CO2e, {{by_hour}}, {{by_month}}, {{by_enduse}}, {{by_fuel}}) %>%
     dplyr::group_by({{by_hour}}, {{by_month}}, {{by_enduse}}, {{by_fuel}}) %>%
-    dplyr::summarize(mean_kWh = mean(value))
+    dplyr::summarize(kWh = mean(value), mean_CO2e = mean(CO2e), sum_kWh = sum(value), sum_CO2e = sum(CO2e))
 
 
 }
