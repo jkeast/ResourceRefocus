@@ -26,7 +26,7 @@ plot_enduse_avgs <- function(csv, title = NULL, bw = FALSE, result = "Consumptio
 
     #make breaks align with day breaks and clean labels
     ggplot2::scale_x_continuous(breaks=c(1, 6, 12, 18, 24))+
-    ggplot2::labs(title = title, subtitle = stringr::str_c("Average Hourly ", result), color = NULL, linetype = NULL, y = "kWh") +
+    ggplot2::labs(title = title, subtitle = stringr::str_c("Average Hourly ", result, " by End Use"), color = NULL, linetype = NULL, y = "kWh") +
     {if(result == "Emissions")ggplot2::labs(y="Emissions (lbs CO2e)")} +
 
     #customize fonts to those in RR style guide
