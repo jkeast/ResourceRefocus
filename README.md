@@ -296,7 +296,7 @@ plot_dualfuel_avgs("data/sample_baseline_dual-fuel_design.csv", title = "Placeho
 
 <img src="man/figures/README-unnamed-chunk-10-2.png" width="100%" />
 
-#### End-use Averages Barcharts
+#### End Use Averages Barcharts
 
 `plot_stacked_enduses()` creates barcharts to show average energy
 projections. If provided with two paths to csvs it will compare the two

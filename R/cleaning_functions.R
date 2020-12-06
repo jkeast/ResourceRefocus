@@ -29,11 +29,7 @@ clean_enduse <- function(data){
                   enduse = stringr::str_replace(enduse, "_", " "),
 
                   #add space before uppercase letter when directly after lowercase
-                  enduse = dplyr::case_when(
-                    stringr::str_detect(enduse, "(?<=[a-z])[A-Z]") ~
-                      stringr::str_c(stringr::str_split(enduse, "(?<=[a-z])[A-Z]", simplify = TRUE)[, 1], " ",
-                                     stringr::str_split(enduse, "[a-z](?=[A-Z])", simplify = TRUE)[, 2]),
-                    TRUE ~ enduse),
+                  enduse = stringr::str_replace_all(enduse, "((?<=[a-z])(?=([A-Z])))", " "),
 
                   #Water Systems -> DHW
                   enduse = dplyr::case_when(
@@ -56,7 +52,8 @@ clean_enduse <- function(data){
 
 to_remove <- function(data){
   data2 <- data %>%
-    dplyr::filter(stringr::str_detect(enduse, "Electricity")) %>%
+    #dplyr::filter(stringr::str_detect(enduse, "Electricity")) %>%
+    dplyr::filter(fuel == "Electricity" | enduse == "Electricity") %>%
     dplyr::group_by(fuel) %>%
     dplyr::summarize(mean_kWh = signif(sum(value), 5))
 
@@ -128,15 +125,15 @@ clean_data <- function(csv, by_month = month, by_enduse = enduse, by_hour = Hour
 
            CO2e = dplyr::case_when(
              fuel == "Gas" ~ convert(value, 105480400)*`tonne CO2-e/therm`*2204.6,
-             TRUE ~ convert(value)*1000*`tonne CO2-e/MWh`*2204.6))
+             TRUE ~ convert(value)*1000*`tonne CO2-e/MWh`*2204.6))%>%
+        #clean all enduses
+        clean_enduse()
 
 
   remove <- to_remove(data)
 
   data <- data %>%
-    dplyr::filter(!fuel %in% c(remove)) %>%
-    #clean all enduses
-    clean_enduse()
+    dplyr::filter(!fuel %in% c(remove))
 
 
     #select/group by month and enduse unless otherwise specified

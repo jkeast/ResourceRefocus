@@ -141,7 +141,7 @@ plot_dualfuel_avgs("data/sample_baseline_dual-fuel_design.csv", title = "Placeho
 plot_dualfuel_avgs("data/sample_baseline_dual-fuel_design.csv", title = "Placeholder Title", result = "Emissions", by_month = NULL)
 ```
 
-#### End-use Averages Barcharts
+#### End Use Averages Barcharts
 
 `plot_stacked_enduses()` creates barcharts to show average energy projections. If provided with two paths to csvs it will compare the two models. It can also stratify the data by month and/or visualize a dual-fuel model. It takes the following arguments:
 
