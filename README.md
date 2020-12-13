@@ -34,7 +34,7 @@ extrafont::loadfonts(device = "win")
 I wrote a couple of functions to transform model outputs into a workable
 format for plotting:
 
-  - `simpleCap()` capitalizes the first letter of each word (for
+  - `simple_cap()` capitalizes the first letter of each word (for
     labeling purposes)
   - `clean_enduse()` modifies the names of enduse columns to be visually
     appealing (for labeling purposes)
@@ -50,7 +50,7 @@ can also be used on its own if ever helpful. To utilize it, call
 
 ``` r
 library(ResourceRefocus)
-data <- clean_data("data/sample_baseline_design.csv")
+data <- clean_data(baseline_csv)
 #> Parsed with column specification:
 #> cols(
 #>   `Date/Time` = col_character(),
@@ -109,7 +109,7 @@ of the day, and fuel – you can set `by_enduse`, `by_hour`, and `by_fuel`
 to NULL.
 
 ``` r
-data <- clean_data("data/sample_baseline_design.csv", by_enduse = NULL, by_hour = NULL, by_fuel = NULL)
+data <- clean_data(baseline_csv, by_enduse = NULL, by_hour = NULL, by_fuel = NULL)
 head(data)
 #> # A tibble: 6 x 5
 #>   month   kWh mean_CO2e sum_kWh sum_CO2e
@@ -126,7 +126,7 @@ You can also use these arguments in conjunction, say to focus on end-use
 and hour of the day:
 
 ``` r
-data <- clean_data("data/sample_baseline_design.csv", by_fuel = NULL, by_month = NULL)
+data <- clean_data(baseline_csv, by_fuel = NULL, by_month = NULL)
 head(data)
 #> # A tibble: 6 x 6
 #> # Groups:   Hour [1]
@@ -148,7 +148,7 @@ say our original units are kBtu. We would want to divide the energy by
 3.412 to convert to kWh:
 
 ``` r
-data <- clean_data("data/sample_baseline_design.csv", conversion_factor = 3.412)
+data <- clean_data(baseline_csv, conversion_factor = 3.412)
 #> Parsed with column specification:
 #> cols(
 #>   `Date/Time` = col_character(),
@@ -207,31 +207,31 @@ and passes `by_month` and `conversion_factor` to `clean_data()`, which
 it calls automatically.
 
 ``` r
-plot_comps("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", title = "Placeholder Title")
+plot_comps(baseline_csv, proposed_csv, title = "Placeholder Title")
 ```
 
 <img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
 
 ``` r
-plot_comps("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", title = "Placeholder Title", result = "Emissions")
+plot_comps(baseline_csv, proposed_csv, title = "Placeholder Title", result = "Emissions")
 ```
 
 <img src="man/figures/README-unnamed-chunk-8-2.png" width="100%" />
 
 ``` r
-plot_comps("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", by_month = NULL, title = "Placeholder Title")
+plot_comps(baseline_csv, proposed_csv, by_month = NULL, title = "Placeholder Title")
 ```
 
 <img src="man/figures/README-unnamed-chunk-8-3.png" width="100%" />
 
 ``` r
-plot_comps("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", by_month = NULL, title = "Placeholder Title", result = "Emissions")
+plot_comps(baseline_csv, proposed_csv, by_month = NULL, title = "Placeholder Title", result = "Emissions")
 ```
 
 <img src="man/figures/README-unnamed-chunk-8-4.png" width="100%" />
 
 ``` r
-plot_comps("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", by_month = NULL, title = "Placeholder Title", bw = TRUE)
+plot_comps(baseline_csv, proposed_csv, by_month = NULL, title = "Placeholder Title", bw = TRUE)
 ```
 
 <img src="man/figures/README-unnamed-chunk-8-5.png" width="100%" />
@@ -250,25 +250,25 @@ and passes `by_month` and `conversion_factor` to `clean_data()`, which
 it calls automatically.
 
 ``` r
-plot_enduse_avgs("data/sample_baseline_design.csv", title = "Placeholder Title")
+plot_enduse_avgs(baseline_csv, title = "Placeholder Title")
 ```
 
 <img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
 
 ``` r
-plot_enduse_avgs("data/sample_baseline_design.csv", by_month = NULL, title = "Placeholder Title")
+plot_enduse_avgs(baseline_csv, by_month = NULL, title = "Placeholder Title")
 ```
 
 <img src="man/figures/README-unnamed-chunk-9-2.png" width="100%" />
 
 ``` r
-plot_enduse_avgs("data/sample_baseline_design.csv", by_month = NULL, title = "Placeholder Title", result = "Emissions")
+plot_enduse_avgs(baseline_csv, by_month = NULL, title = "Placeholder Title", result = "Emissions")
 ```
 
 <img src="man/figures/README-unnamed-chunk-9-3.png" width="100%" />
 
 ``` r
-plot_enduse_avgs("data/sample_baseline_design.csv", title = "Placeholder Title", by_month = NULL, bw = TRUE)
+plot_enduse_avgs(baseline_csv, title = "Placeholder Title", by_month = NULL, bw = TRUE)
 ```
 
 <img src="man/figures/README-unnamed-chunk-9-4.png" width="100%" />
@@ -285,13 +285,13 @@ and passes `by_month` and `conversion_factor` to `clean_data()`, which
 it calls automatically.
 
 ``` r
-plot_dualfuel_avgs("data/sample_baseline_dual-fuel_design.csv", title = "Placeholder Title", by_month = NULL)
+plot_dualfuel_avgs(dualfuel_csv, title = "Placeholder Title", by_month = NULL)
 ```
 
 <img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
 
 ``` r
-plot_dualfuel_avgs("data/sample_baseline_dual-fuel_design.csv", title = "Placeholder Title", result = "Emissions", by_month = NULL)
+plot_dualfuel_avgs(dualfuel_csv, title = "Placeholder Title", result = "Emissions", by_month = NULL)
 ```
 
 <img src="man/figures/README-unnamed-chunk-10-2.png" width="100%" />
@@ -314,28 +314,28 @@ and passes `by_month` and `conversion_factor` to `clean_data()`, which
 it calls automatically.
 
 ``` r
-plot_stacked_enduses("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", title = "Placeholder Title", by_month = NULL, by_fuel = NULL)
+plot_stacked_enduses(baseline_csv, proposed_csv, title = "Placeholder Title", by_month = NULL, by_fuel = NULL)
 #> Warning: Ignoring unknown parameters: identity
 ```
 
 <img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
 
 ``` r
-plot_stacked_enduses("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", title = "Placeholder Title", by_month = NULL, by_fuel = NULL, result = "Emissions")
+plot_stacked_enduses(baseline_csv, proposed_csv, title = "Placeholder Title", by_month = NULL, by_fuel = NULL, result = "Emissions")
 #> Warning: Ignoring unknown parameters: identity
 ```
 
 <img src="man/figures/README-unnamed-chunk-11-2.png" width="100%" />
 
 ``` r
-plot_stacked_enduses("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", title = "Placeholder Title", by_fuel = NULL)
+plot_stacked_enduses(baseline_csv, proposed_csv, title = "Placeholder Title", by_fuel = NULL)
 #> Warning: Ignoring unknown parameters: identity
 ```
 
 <img src="man/figures/README-unnamed-chunk-11-3.png" width="100%" />
 
 ``` r
-plot_stacked_enduses("data/sample_baseline_dual-fuel_design.csv", title = "Placeholder Title", by_month = NULL)
+plot_stacked_enduses(dualfuel_csv, title = "Placeholder Title", by_month = NULL)
 #> Warning: Ignoring unknown parameters: identity
 
 #> Warning: Ignoring unknown parameters: identity
@@ -344,7 +344,7 @@ plot_stacked_enduses("data/sample_baseline_dual-fuel_design.csv", title = "Place
 <img src="man/figures/README-unnamed-chunk-11-4.png" width="100%" />
 
 ``` r
-plot_stacked_enduses("data/sample_baseline_dual-fuel_design.csv", title = "Placeholder Title")
+plot_stacked_enduses(dualfuel_csv, title = "Placeholder Title")
 #> Warning: Ignoring unknown parameters: identity
 
 #> Warning: Ignoring unknown parameters: identity

@@ -104,7 +104,7 @@ clean_data <- function(csv, by_month = month, by_enduse = enduse, by_hour = Hour
   data <- readr::read_csv(csv) %>%
 
     #join with emissions conversions
-    dplyr::full_join(readr::read_csv("data/GHG_index_E3_2030.csv")) %>%
+    dplyr::full_join(readr::read_csv(system.file("extdata", "GHG_index_E3_2030.csv", package = "ResourceRefocus"))) %>%
 
     #transform to long data
     reshape2::melt(id.vars = c("Date/Time", "tonne CO2-e/MWh", "tonne CO2-e/therm"), variable.name = "enduse") %>%
