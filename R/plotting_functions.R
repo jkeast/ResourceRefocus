@@ -4,16 +4,19 @@
 #' @param csv character string of path to csv
 #' @param title character string of desired plot title. Default is NULL
 #' @param bw boolean designating whether to plot in color (FALSE, default), or black and white (TRUE)
+#' @param result "Consumption" or "Emissions" - denotes whether plot displays energy consumption (in kWh) or CO2 emissions (in grams CO2)
 #' @param ... passes arguments to clean_data()
 #' @return line plot with enduse averages
 #' @export
 
-plot_enduse_avgs <- function(csv, title = NULL, bw = FALSE, ...){
+plot_enduse_avgs <- function(csv, title = NULL, bw = FALSE, result = "Consumption", ...){
 
   data <- clean_data(csv, by_fuel = NULL, ...)
 
   #create line plot
-  ggplot2::ggplot(data, aes(x=Hour, y=mean_kWh, color=enduse)) +
+  ggplot2::ggplot(data, aes(x=Hour, color=enduse)) +
+    {if(result == "Emissions")aes(y=mean_CO2e)} +
+    {if(result == "Consumption")aes(y=kWh)} +
     {if(bw)aes(linetype=enduse)} +
     ggplot2::geom_line(size = 1.05) +
     ggplot2::theme_bw() +
@@ -23,7 +26,8 @@ plot_enduse_avgs <- function(csv, title = NULL, bw = FALSE, ...){
 
     #make breaks align with day breaks and clean labels
     ggplot2::scale_x_continuous(breaks=c(1, 6, 12, 18, 24))+
-    ggplot2::labs(title = title, subtitle = "Average Hourly Consumption by End Use", y = "kWh", color = NULL, linetype = NULL) +
+    ggplot2::labs(title = title, subtitle = stringr::str_c("Average Hourly ", result, " by End Use"), color = NULL, linetype = NULL, y = "kWh") +
+    {if(result == "Emissions")ggplot2::labs(y="Emissions (lbs CO2e)")} +
 
     #customize fonts to those in RR style guide
     ggplot2::theme(text = ggplot2::element_text(family = "Muli"),
@@ -35,7 +39,6 @@ plot_enduse_avgs <- function(csv, title = NULL, bw = FALSE, ...){
 }
 
 
-
 #' @name plot_comps
 #' @title plot_comps
 #' @importFrom dplyr %>%
@@ -44,11 +47,12 @@ plot_enduse_avgs <- function(csv, title = NULL, bw = FALSE, ...){
 #' @param proposed character string of path to csv containing proposed data
 #' @param title character string of desired plot title. Default is NULL
 #' @param bw boolean designating whether to plot in color (FALSE, default), or black and white (TRUE)
+#' @param result "Consumption" or "Emissions" - denotes whether plot displays energy consumption (in kWh) or CO2 emissions (in grams CO2)
 #' @param ... passes arguments to clean_data()
 #' @return line plot comparing two models
 #' @export
 
-plot_comps <- function(baseline, proposed, title = NULL, bw = FALSE, ...){
+plot_comps <- function(baseline, proposed, title = NULL, bw = FALSE, result = "Consumption", ...){
 
   #combine baseline and proposed datasets
   data <- clean_data(baseline, by_fuel = NULL, by_enduse = NULL, ...) %>%
@@ -56,7 +60,9 @@ plot_comps <- function(baseline, proposed, title = NULL, bw = FALSE, ...){
     rbind(dplyr::mutate(clean_data(proposed, by_fuel = NULL, by_enduse = NULL, ...), model = "Proposed"))
 
   #create line plot
-  ggplot2::ggplot(data, aes(x=Hour, y=mean_kWh)) + ggplot2::geom_line(size = 1.05) +
+  ggplot2::ggplot(data, aes(x=Hour)) + ggplot2::geom_line(size = 1.05) +
+    {if(result == "Emissions")aes(y=mean_CO2e)} +
+    {if(result == "Consumption")aes(y=kWh)} +
     {if(bw)aes(linetype=model)}+
     {if(!bw)aes(color=model)}+
     ggplot2::theme_bw() +
@@ -66,7 +72,8 @@ plot_comps <- function(baseline, proposed, title = NULL, bw = FALSE, ...){
 
     #make breaks align with day breaks and clean labels
     ggplot2::scale_x_continuous(breaks=c(1, 6, 12, 18, 24))+
-    ggplot2::labs(title = title, subtitle = "Average Hourly Total Consumption", y = "kWh", color = NULL, linetype = NULL)+
+    ggplot2::labs(title = title, subtitle = stringr::str_c("Average Hourly Total ", result), color = NULL, linetype = NULL, y = "kWh") +
+    {if(result == "Emissions")ggplot2::labs(y="Emissions (lbs CO2e)")} +
 
     #customize fonts to those in RR style guide
     ggplot2::theme(text = ggplot2::element_text(family = "Muli"),
@@ -84,15 +91,16 @@ plot_comps <- function(baseline, proposed, title = NULL, bw = FALSE, ...){
 #' @importFrom ggplot2 aes
 #' @param csv character string of path to csv
 #' @param title character string of desired plot title. Default is NULL
+#' @param result "Consumption" or "Emissions" - denotes whether plot displays energy consumption (in kWh) or CO2 emissions (in grams CO2)
 #' @param ... passes arguments to clean_data()
 #' @return line plot of dual-fuel models
 #' @export
 
-plot_dualfuel_avgs <- function(csv, title = NULL, ...){
+plot_dualfuel_avgs <- function(csv, title = NULL, result = "Consumption", ...){
   #convert to kBtu
   data <- clean_data(csv, ...) %>%
-    dplyr::mutate(mean_kBtu = mean_kWh*3.412) %>%
-    dplyr::select(-c(mean_kWh))
+    dplyr::mutate(mean_kBtu = kWh*3.412) %>%
+    dplyr::select(-c(kWh))
 
   #group end uses by fuel for legend
   data_order <- data %>%
@@ -104,7 +112,9 @@ plot_dualfuel_avgs <- function(csv, title = NULL, ...){
   data$fuel <- factor(data$fuel, levels = c("Gas", "Electricity"))
 
   #create line plot
-  ggplot2::ggplot(data, aes(x=Hour, y=mean_kBtu, color=enduse, linetype = fuel)) +
+  ggplot2::ggplot(data, aes(x=Hour, color=enduse, linetype = fuel)) +
+    {if(result == "Emissions")aes(y=mean_CO2e)} +
+    {if(result == "Consumption")aes(y=mean_kBtu)} +
     ggplot2::geom_line(size = 1.05) +
     ggplot2::theme_bw() +
 
@@ -113,7 +123,8 @@ plot_dualfuel_avgs <- function(csv, title = NULL, ...){
 
     #make breaks align with day breaks and clean labels
     ggplot2::scale_x_continuous(breaks=c(1, 6, 12, 18, 24))+
-    ggplot2::labs(title = title, subtitle = "Average Hourly Consumption by End Use – Dual-Fuel Model", y = "kBtu", color = NULL, linetype = NULL) +
+    ggplot2::labs(title = title, subtitle = stringr::str_c("Average Hourly ", result, " by End Use – Dual-Fuel Model"), color = NULL, linetype = NULL, y = "kBtu") +
+    {if(result == "Emissions")ggplot2::labs(y="Emissions (lbs CO2e)")} +
 
     #customize fonts to those in RR style guide
     ggplot2::theme(text = ggplot2::element_text(family = "Muli"),
@@ -135,11 +146,13 @@ plot_dualfuel_avgs <- function(csv, title = NULL, ...){
 #' @param baseline character string of path to csv containing data
 #' @param proposed character string of path to csv containing data to compare, or NULL (default)
 #' @param title character string of desired plot title. Default is NULL
+#' @param by_fuel designates whether to summarize data by fuel (the default) or omit fuel (NULL)
+#' @param result "Consumption" or "Emissions" - denotes whether plot displays energy consumption (in kWh) or CO2 emissions (in grams CO2)
 #' @param ... passes arguments to clean_data()
 #' @return Stacked barchart of enduses
 #' @export
 
-plot_stacked_enduses <- function(baseline, proposed = NULL, title = NULL, by_fuel = fuel, ...){
+plot_stacked_enduses <- function(baseline, proposed = NULL, title = NULL, by_fuel = fuel, result = "Consumption", ...){
 
   devtools::install_github("coolbutuseless/ggpattern")
 
@@ -152,9 +165,9 @@ plot_stacked_enduses <- function(baseline, proposed = NULL, title = NULL, by_fue
 
     #convert to kBtu for dual-fuel
     dplyr::mutate(mean_energy = dplyr::case_when(
-      !is.null({{by_fuel}}) ~ mean_kWh*3.412,
-      TRUE ~ mean_kWh)) %>%
-    dplyr::select(-c(mean_kWh))
+      !is.null({{by_fuel}}) ~ kWh*3.412,
+      TRUE ~ kWh)) %>%
+    dplyr::select(-c(kWh))
 
   #orders from least energy intensive to most
   enduse_order <- data %>%
@@ -163,7 +176,9 @@ plot_stacked_enduses <- function(baseline, proposed = NULL, title = NULL, by_fue
     dplyr::arrange({{by_fuel}}, energy)
   data$enduse <- factor(data$enduse, levels = enduse_order$enduse)
 
-  ggplot2::ggplot(data, aes(x=model, y=mean_energy, fill=enduse, color = enduse))+
+  ggplot2::ggplot(data, aes(x=model, fill=enduse, color = enduse))+
+    {if(result == "Emissions")aes(y=mean_CO2e)} +
+    {if(result == "Consumption")aes(y=mean_energy)} +
     ggplot2::geom_col(identity="stat")+
 
     #add pattern if dual-fuel
@@ -174,9 +189,10 @@ plot_stacked_enduses <- function(baseline, proposed = NULL, title = NULL, by_fue
 
     {if("month" %in% colnames(data))ggplot2::facet_wrap(~month)} +
     ggplot2::theme_bw()+
-    ggplot2::labs(title = title, x="Model", y = "kWh", fill = NULL, color = NULL, pattern = NULL) +
+    ggplot2::labs(title = title, subtitle = stringr::str_c("Average ", result, " by End Use"), x= NULL, fill = NULL, pattern = NULL, color = NULL, linetype = NULL, y = "kWh") +
 
     {if("fuel" %in% colnames(data))ggplot2::labs(y="kBtu")}+
+    {if(result == "Emissions")ggplot2::labs(y="Emissions (lbs CO2e)")} +
     ggplot2::theme(text = ggplot2::element_text(family = "Muli"),
           plot.title=ggplot2::element_text(family = "Roboto Slab", face="bold"))+
     {if("fuel" %in% colnames(data))ggplot2::guides(fill = ggplot2::guide_legend(override.aes = list(pattern = plot_linetypes(data, "pattern"))))}

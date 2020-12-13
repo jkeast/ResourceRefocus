@@ -4,12 +4,14 @@
 \alias{plot_dualfuel_avgs}
 \title{plot_dualfuel_avgs}
 \usage{
-plot_dualfuel_avgs(csv, title = NULL, ...)
+plot_dualfuel_avgs(csv, title = NULL, result = "Consumption", ...)
 }
 \arguments{
 \item{csv}{character string of path to csv}
 
 \item{title}{character string of desired plot title. Default is NULL}
+
+\item{result}{"Consumption" or "Emissions" - denotes whether plot displays energy consumption (in kWh) or CO2 emissions (in grams CO2)}
 
 \item{...}{passes arguments to clean_data()}
 }

@@ -10,7 +10,7 @@ to_remove(data)
 \item{data}{a dataframe with a fuel column (column name must match exactly). Column type must be chr.}
 }
 \value{
-String with enduse fuel to remove or NULL
+String with fuel to remove or NULL
 }
 \description{
 to_remove

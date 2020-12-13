@@ -34,7 +34,7 @@ extrafont::loadfonts(device = "win")
 I wrote a couple of functions to transform model outputs into a workable
 format for plotting:
 
-  - `simpleCap()` capitalizes the first letter of each word (for
+  - `simple_cap()` capitalizes the first letter of each word (for
     labeling purposes)
   - `clean_enduse()` modifies the names of enduse columns to be visually
     appealing (for labeling purposes)
@@ -50,7 +50,7 @@ can also be used on its own if ever helpful. To utilize it, call
 
 ``` r
 library(ResourceRefocus)
-data <- clean_data("data/sample_baseline_design.csv")
+data <- clean_data(baseline_csv)
 #> Parsed with column specification:
 #> cols(
 #>   `Date/Time` = col_character(),
@@ -65,19 +65,28 @@ data <- clean_data("data/sample_baseline_design.csv")
 #>   `Appliances:InteriorEquipment:Electricity [J](Hourly)` = col_double(),
 #>   `DHW:NaturalGas [J](Hourly)` = col_double()
 #> )
+#> Parsed with column specification:
+#> cols(
+#>   `Date/Time` = col_character(),
+#>   `tonne CO2-e/MWh` = col_double(),
+#>   `tonne CO2-e/therm` = col_double()
+#> )
+#> Joining, by = "Date/Time"
 #> `clean_data()` converting energy from joules to kWh. Override with conversion_factor if input in other units.
-#> `to_remove()` removing column summing electric end uses from data.
+#> `clean_data()` converting energy with conversion factor of 105480400, dividing original energy values by this factor. Override with conversion_factor if incorrect.
+#> `clean_data()` converting energy from joules to kWh. Override with conversion_factor if input in other units.
+#> `to_remove()` removing row summing electric end uses from data.
 head(data)
-#> # A tibble: 6 x 5
+#> # A tibble: 6 x 8
 #> # Groups:   Hour, month, enduse [6]
-#>    Hour month enduse             fuel        mean_kWh
-#>   <dbl> <fct> <chr>              <chr>          <dbl>
-#> 1     1 Jan   Appliances         Electricity   1.99  
-#> 2     1 Jan   Cooling            Electricity   0.178 
-#> 3     1 Jan   Domestic Hot Water NaturalGas    1.99  
-#> 4     1 Jan   Exterior Lights    Electricity   0.189 
-#> 5     1 Jan   Fans               Electricity   0.0177
-#> 6     1 Jan   Heating            Electricity   0.851
+#>    Hour month enduse             fuel           kWh mean_CO2e sum_kWh sum_CO2e
+#>   <dbl> <fct> <chr>              <chr>        <dbl>     <dbl>   <dbl>    <dbl>
+#> 1     1 Jan   Appliances         Electricity 1.99     0.316    63.5    10.1   
+#> 2     1 Jan   Cooling            Electricity 0.178    0.0294    5.69    0.940 
+#> 3     1 Jan   Domestic Hot Water NaturalGas  1.99     0.316    63.5    10.1   
+#> 4     1 Jan   Exterior Lights    Electricity 0.189    0.0298    6.05    0.954 
+#> 5     1 Jan   Fans               Electricity 0.0177   0.00290   0.568   0.0928
+#> 6     1 Jan   Heating            Electricity 0.851    0.139    27.2     4.44
 ```
 
 In addition to the path to a csv, `clean_data()` has a number of other
@@ -100,35 +109,35 @@ of the day, and fuel – you can set `by_enduse`, `by_hour`, and `by_fuel`
 to NULL.
 
 ``` r
-data <- clean_data("data/sample_baseline_design.csv", by_enduse = NULL, by_hour = NULL, by_fuel = NULL)
+data <- clean_data(baseline_csv, by_enduse = NULL, by_hour = NULL, by_fuel = NULL)
 head(data)
-#> # A tibble: 6 x 2
-#>   month mean_kWh
-#>   <fct>    <dbl>
-#> 1 Jan       2.84
-#> 2 Feb       2.75
-#> 3 Mar       2.74
-#> 4 Apr       2.67
-#> 5 May       2.74
-#> 6 Jun       2.70
+#> # A tibble: 6 x 5
+#>   month   kWh mean_CO2e sum_kWh sum_CO2e
+#>   <fct> <dbl>     <dbl>   <dbl>    <dbl>
+#> 1 Jan    2.84    0.339   19611.    2341.
+#> 2 Feb    2.75    0.266   16657.    1607.
+#> 3 Mar    2.74    0.162   18351.    1084.
+#> 4 Apr    2.67    0.112   17285.     723.
+#> 5 May    2.74    0.0938  18370.     628.
+#> 6 Jun    2.70    0.119   17520.     770.
 ```
 
 You can also use these arguments in conjunction, say to focus on end-use
 and hour of the day:
 
 ``` r
-data <- clean_data("data/sample_baseline_design.csv", by_fuel = NULL, by_month = NULL)
+data <- clean_data(baseline_csv, by_fuel = NULL, by_month = NULL)
 head(data)
-#> # A tibble: 6 x 3
+#> # A tibble: 6 x 6
 #> # Groups:   Hour [1]
-#>    Hour enduse             mean_kWh
-#>   <dbl> <chr>                 <dbl>
-#> 1     1 Appliances           1.88  
-#> 2     1 Cooling              1.09  
-#> 3     1 Domestic Hot Water   1.88  
-#> 4     1 Exterior Lights      0.140 
-#> 5     1 Fans                 0.0358
-#> 6     1 Heating              0.224
+#>    Hour enduse                kWh mean_CO2e sum_kWh sum_CO2e
+#>   <dbl> <chr>               <dbl>     <dbl>   <dbl>    <dbl>
+#> 1     1 Appliances         1.88     0.239     688.     87.6 
+#> 2     1 Cooling            1.09     0.141     399.     51.6 
+#> 3     1 Domestic Hot Water 1.88     0.239     688.     87.6 
+#> 4     1 Exterior Lights    0.140    0.0183     51.3     6.72
+#> 5     1 Fans               0.0358   0.00465    13.1     1.70
+#> 6     1 Heating            0.224    0.0300     82.2    11.0
 ```
 
 `clean_data()` also passes a `conversion_factor` argument to the
@@ -139,7 +148,7 @@ say our original units are kBtu. We would want to divide the energy by
 3.412 to convert to kWh:
 
 ``` r
-data <- clean_data("data/sample_baseline_design.csv", conversion_factor = 3.412)
+data <- clean_data(baseline_csv, conversion_factor = 3.412)
 #> Parsed with column specification:
 #> cols(
 #>   `Date/Time` = col_character(),
@@ -154,19 +163,28 @@ data <- clean_data("data/sample_baseline_design.csv", conversion_factor = 3.412)
 #>   `Appliances:InteriorEquipment:Electricity [J](Hourly)` = col_double(),
 #>   `DHW:NaturalGas [J](Hourly)` = col_double()
 #> )
+#> Parsed with column specification:
+#> cols(
+#>   `Date/Time` = col_character(),
+#>   `tonne CO2-e/MWh` = col_double(),
+#>   `tonne CO2-e/therm` = col_double()
+#> )
+#> Joining, by = "Date/Time"
 #> `clean_data()` converting energy with conversion factor of 3.412, dividing original energy values by this factor. Override with conversion_factor if incorrect.
-#> `to_remove()` removing column summing electric end uses from data.
+#> `clean_data()` converting energy with conversion factor of 105480400, dividing original energy values by this factor. Override with conversion_factor if incorrect.
+#> `clean_data()` converting energy from joules to kWh. Override with conversion_factor if input in other units.
+#> `to_remove()` removing row summing electric end uses from data.
 head(data)
-#> # A tibble: 6 x 5
+#> # A tibble: 6 x 8
 #> # Groups:   Hour, month, enduse [6]
-#>    Hour month enduse             fuel        mean_kWh
-#>   <dbl> <fct> <chr>              <chr>          <dbl>
-#> 1     1 Jan   Appliances         Electricity 2094375.
-#> 2     1 Jan   Cooling            Electricity  187742.
-#> 3     1 Jan   Domestic Hot Water NaturalGas  2094375.
-#> 4     1 Jan   Exterior Lights    Electricity  199399.
-#> 5     1 Jan   Fans               Electricity   18724.
-#> 6     1 Jan   Heating            Electricity  898006.
+#>    Hour month enduse            fuel             kWh mean_CO2e  sum_kWh sum_CO2e
+#>   <dbl> <fct> <chr>             <chr>          <dbl>     <dbl>    <dbl>    <dbl>
+#> 1     1 Jan   Appliances        Electricity 2094375.   333752.   6.70e7   1.07e7
+#> 2     1 Jan   Cooling           Electricity  187742.    30982.   6.01e6   9.91e5
+#> 3     1 Jan   Domestic Hot Wat~ NaturalGas  2094375.   333752.   6.70e7   1.07e7
+#> 4     1 Jan   Exterior Lights   Electricity  199399.    31447.   6.38e6   1.01e6
+#> 5     1 Jan   Fans              Electricity   18724.     3060.   5.99e5   9.79e4
+#> 6     1 Jan   Heating           Electricity  898006.   146337.   2.87e7   4.68e6
 ```
 
 As you can see, the function also sends a message reminding you which
@@ -189,22 +207,34 @@ and passes `by_month` and `conversion_factor` to `clean_data()`, which
 it calls automatically.
 
 ``` r
-plot_comps("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", title = "Placeholder Title")
+plot_comps(baseline_csv, proposed_csv, title = "Placeholder Title")
 ```
 
 <img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
 
 ``` r
-plot_comps("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", by_month = NULL, title = "Placeholder Title")
+plot_comps(baseline_csv, proposed_csv, title = "Placeholder Title", result = "Emissions")
 ```
 
 <img src="man/figures/README-unnamed-chunk-8-2.png" width="100%" />
 
 ``` r
-plot_comps("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", by_month = NULL, title = "Placeholder Title", bw = TRUE)
+plot_comps(baseline_csv, proposed_csv, by_month = NULL, title = "Placeholder Title")
 ```
 
 <img src="man/figures/README-unnamed-chunk-8-3.png" width="100%" />
+
+``` r
+plot_comps(baseline_csv, proposed_csv, by_month = NULL, title = "Placeholder Title", result = "Emissions")
+```
+
+<img src="man/figures/README-unnamed-chunk-8-4.png" width="100%" />
+
+``` r
+plot_comps(baseline_csv, proposed_csv, by_month = NULL, title = "Placeholder Title", bw = TRUE)
+```
+
+<img src="man/figures/README-unnamed-chunk-8-5.png" width="100%" />
 
 #### Plot End-use Averages
 
@@ -220,22 +250,28 @@ and passes `by_month` and `conversion_factor` to `clean_data()`, which
 it calls automatically.
 
 ``` r
-plot_enduse_avgs("data/sample_baseline_design.csv", title = "Placeholder Title")
+plot_enduse_avgs(baseline_csv, title = "Placeholder Title")
 ```
 
 <img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
 
 ``` r
-plot_enduse_avgs("data/sample_baseline_design.csv", by_month = NULL, title = "Placeholder Title")
+plot_enduse_avgs(baseline_csv, by_month = NULL, title = "Placeholder Title")
 ```
 
 <img src="man/figures/README-unnamed-chunk-9-2.png" width="100%" />
 
 ``` r
-plot_enduse_avgs("data/sample_baseline_design.csv", title = "Placeholder Title", by_month = NULL, bw = TRUE)
+plot_enduse_avgs(baseline_csv, by_month = NULL, title = "Placeholder Title", result = "Emissions")
 ```
 
 <img src="man/figures/README-unnamed-chunk-9-3.png" width="100%" />
+
+``` r
+plot_enduse_avgs(baseline_csv, title = "Placeholder Title", by_month = NULL, bw = TRUE)
+```
+
+<img src="man/figures/README-unnamed-chunk-9-4.png" width="100%" />
 
 #### Plot Dual-Fuel Averages
 
@@ -249,12 +285,18 @@ and passes `by_month` and `conversion_factor` to `clean_data()`, which
 it calls automatically.
 
 ``` r
-plot_dualfuel_avgs("data/sample_baseline_dual-fuel_design.csv", title = "Placeholder Title", by_month = NULL)
+plot_dualfuel_avgs(dualfuel_csv, title = "Placeholder Title", by_month = NULL)
 ```
 
 <img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
 
-#### End-use Averages Barcharts
+``` r
+plot_dualfuel_avgs(dualfuel_csv, title = "Placeholder Title", result = "Emissions", by_month = NULL)
+```
+
+<img src="man/figures/README-unnamed-chunk-10-2.png" width="100%" />
+
+#### End Use Averages Barcharts
 
 `plot_stacked_enduses()` creates barcharts to show average energy
 projections. If provided with two paths to csvs it will compare the two
@@ -272,33 +314,40 @@ and passes `by_month` and `conversion_factor` to `clean_data()`, which
 it calls automatically.
 
 ``` r
-plot_stacked_enduses("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", title = "Placeholder Title", by_month = NULL, by_fuel = NULL)
+plot_stacked_enduses(baseline_csv, proposed_csv, title = "Placeholder Title", by_month = NULL, by_fuel = NULL)
 #> Warning: Ignoring unknown parameters: identity
 ```
 
 <img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
 
 ``` r
-plot_stacked_enduses("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", title = "Placeholder Title", by_fuel = NULL)
+plot_stacked_enduses(baseline_csv, proposed_csv, title = "Placeholder Title", by_month = NULL, by_fuel = NULL, result = "Emissions")
 #> Warning: Ignoring unknown parameters: identity
 ```
 
 <img src="man/figures/README-unnamed-chunk-11-2.png" width="100%" />
 
 ``` r
-plot_stacked_enduses("data/sample_baseline_dual-fuel_design.csv", title = "Placeholder Title", by_month = NULL)
-#> Warning: Ignoring unknown parameters: identity
-
+plot_stacked_enduses(baseline_csv, proposed_csv, title = "Placeholder Title", by_fuel = NULL)
 #> Warning: Ignoring unknown parameters: identity
 ```
 
 <img src="man/figures/README-unnamed-chunk-11-3.png" width="100%" />
 
 ``` r
-plot_stacked_enduses("data/sample_baseline_dual-fuel_design.csv", title = "Placeholder Title")
+plot_stacked_enduses(dualfuel_csv, title = "Placeholder Title", by_month = NULL)
 #> Warning: Ignoring unknown parameters: identity
 
 #> Warning: Ignoring unknown parameters: identity
 ```
 
 <img src="man/figures/README-unnamed-chunk-11-4.png" width="100%" />
+
+``` r
+plot_stacked_enduses(dualfuel_csv, title = "Placeholder Title")
+#> Warning: Ignoring unknown parameters: identity
+
+#> Warning: Ignoring unknown parameters: identity
+```
+
+<img src="man/figures/README-unnamed-chunk-11-5.png" width="100%" />

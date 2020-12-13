@@ -11,6 +11,12 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+
+baseline_csv <- system.file("extdata", "sample_baseline_design.csv", package = "ResourceRefocus")
+
+proposed_csv <- system.file("extdata", "sample_proposed_design_w-pumpsMeter.csv", package = "ResourceRefocus")
+
+dualfuel_csv <- system.file("extdata", "sample_baseline_dual-fuel_design.csv", package = "ResourceRefocus")
 ```
 
 # Resource Refocus R Data Visualization Package for 8760 Building End-Use Level Data <img src="Resource-Refocus-Secondary-Logo-RGB-Borderless.png" align="right" height=130/>
@@ -45,7 +51,7 @@ extrafont::loadfonts(device = "win")
 
 I wrote a couple of functions to transform model outputs into a workable format for plotting: 
 
-- `simpleCap()` capitalizes the first letter of each word (for labeling purposes)
+- `simple_cap()` capitalizes the first letter of each word (for labeling purposes)
 - `clean_enduse()` modifies the names of enduse columns to be visually appealing (for labeling purposes)
 - `to_remove()` determines if there is an enduse equalling sum of others and removes it
 - `convert()` converts energy from original units to kWh
@@ -55,7 +61,7 @@ I wrote a couple of functions to transform model outputs into a workable format 
 
 ```{r}
 library(ResourceRefocus)
-data <- clean_data("data/sample_baseline_design.csv")
+data <- clean_data(baseline_csv)
 head(data)
 ```
 
@@ -69,21 +75,21 @@ In addition to the path to a csv, `clean_data()` has a number of other arguments
 Each of these arguments shape how granular the summaries are. The default for the function is to include all these variables, so you need to indicate which you want the function to NOT consider. For example, if you want to just focus on energy usage by month -- ignoring end-use, hour of the day, and fuel -- you can set `by_enduse`, `by_hour`, and `by_fuel` to NULL.
 
 ```{r, message=FALSE}
-data <- clean_data("data/sample_baseline_design.csv", by_enduse = NULL, by_hour = NULL, by_fuel = NULL)
+data <- clean_data(baseline_csv, by_enduse = NULL, by_hour = NULL, by_fuel = NULL)
 head(data)
 ```
 
 You can also use these arguments in conjunction, say to focus on end-use and hour of the day:
 
 ```{r, message=FALSE}
-data <- clean_data("data/sample_baseline_design.csv", by_fuel = NULL, by_month = NULL)
+data <- clean_data(baseline_csv, by_fuel = NULL, by_month = NULL)
 head(data)
 ```
 
 `clean_data()` also passes a `conversion_factor` argument to the `convert()` function. This is what you should use if the source data is in some units other than Joules --- just supply `clean_data()` with the correct factor to convert from the original units to kWh. For example, say our original units are kBtu. We would want to divide the energy by 3.412 to convert to kWh:
 
 ```{r}
-data <- clean_data("data/sample_baseline_design.csv", conversion_factor = 3.412)
+data <- clean_data(baseline_csv, conversion_factor = 3.412)
 head(data)
 ```
 
@@ -103,9 +109,11 @@ As you can see, the function also sends a message reminding you which conversion
 and passes `by_month` and `conversion_factor` to `clean_data()`, which it calls automatically.
 
 ```{r, message=FALSE}
-plot_comps("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", title = "Placeholder Title")
-plot_comps("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", by_month = NULL, title = "Placeholder Title")
-plot_comps("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", by_month = NULL, title = "Placeholder Title", bw = TRUE)
+plot_comps(baseline_csv, proposed_csv, title = "Placeholder Title")
+plot_comps(baseline_csv, proposed_csv, title = "Placeholder Title", result = "Emissions")
+plot_comps(baseline_csv, proposed_csv, by_month = NULL, title = "Placeholder Title")
+plot_comps(baseline_csv, proposed_csv, by_month = NULL, title = "Placeholder Title", result = "Emissions")
+plot_comps(baseline_csv, proposed_csv, by_month = NULL, title = "Placeholder Title", bw = TRUE)
 ```
 
 #### Plot End-use Averages
@@ -119,9 +127,10 @@ plot_comps("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pum
 and passes `by_month` and `conversion_factor` to `clean_data()`, which it calls automatically.
 
 ```{r, message=FALSE}
-plot_enduse_avgs("data/sample_baseline_design.csv", title = "Placeholder Title")
-plot_enduse_avgs("data/sample_baseline_design.csv", by_month = NULL, title = "Placeholder Title")
-plot_enduse_avgs("data/sample_baseline_design.csv", title = "Placeholder Title", by_month = NULL, bw = TRUE)
+plot_enduse_avgs(baseline_csv, title = "Placeholder Title")
+plot_enduse_avgs(baseline_csv, by_month = NULL, title = "Placeholder Title")
+plot_enduse_avgs(baseline_csv, by_month = NULL, title = "Placeholder Title", result = "Emissions")
+plot_enduse_avgs(baseline_csv, title = "Placeholder Title", by_month = NULL, bw = TRUE)
 ```
 
 #### Plot Dual-Fuel Averages
@@ -134,10 +143,11 @@ plot_enduse_avgs("data/sample_baseline_design.csv", title = "Placeholder Title",
 and passes `by_month` and `conversion_factor` to `clean_data()`, which it calls automatically.
 
 ```{r, message=FALSE}
-plot_dualfuel_avgs("data/sample_baseline_dual-fuel_design.csv", title = "Placeholder Title", by_month = NULL)
+plot_dualfuel_avgs(dualfuel_csv, title = "Placeholder Title", by_month = NULL)
+plot_dualfuel_avgs(dualfuel_csv, title = "Placeholder Title", result = "Emissions", by_month = NULL)
 ```
 
-#### End-use Averages Barcharts
+#### End Use Averages Barcharts
 
 `plot_stacked_enduses()` creates barcharts to show average energy projections. If provided with two paths to csvs it will compare the two models. It can also stratify the data by month and/or visualize a dual-fuel model. It takes the following arguments:
 
@@ -149,8 +159,9 @@ plot_dualfuel_avgs("data/sample_baseline_dual-fuel_design.csv", title = "Placeho
 and passes `by_month` and `conversion_factor` to `clean_data()`, which it calls automatically.
 
 ```{r, message=FALSE}
-plot_stacked_enduses("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", title = "Placeholder Title", by_month = NULL, by_fuel = NULL)
-plot_stacked_enduses("data/sample_baseline_design.csv", "data/sample_proposed_design_w-pumpsMeter.csv", title = "Placeholder Title", by_fuel = NULL)
-plot_stacked_enduses("data/sample_baseline_dual-fuel_design.csv", title = "Placeholder Title", by_month = NULL)
-plot_stacked_enduses("data/sample_baseline_dual-fuel_design.csv", title = "Placeholder Title")
+plot_stacked_enduses(baseline_csv, proposed_csv, title = "Placeholder Title", by_month = NULL, by_fuel = NULL)
+plot_stacked_enduses(baseline_csv, proposed_csv, title = "Placeholder Title", by_month = NULL, by_fuel = NULL, result = "Emissions")
+plot_stacked_enduses(baseline_csv, proposed_csv, title = "Placeholder Title", by_fuel = NULL)
+plot_stacked_enduses(dualfuel_csv, title = "Placeholder Title", by_month = NULL)
+plot_stacked_enduses(dualfuel_csv, title = "Placeholder Title")
 ```

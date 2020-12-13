@@ -4,7 +4,7 @@
 \alias{plot_enduse_avgs}
 \title{plot_enduse_avgs}
 \usage{
-plot_enduse_avgs(csv, title = NULL, bw = FALSE, ...)
+plot_enduse_avgs(csv, title = NULL, bw = FALSE, result = "Consumption", ...)
 }
 \arguments{
 \item{csv}{character string of path to csv}
@@ -12,6 +12,8 @@ plot_enduse_avgs(csv, title = NULL, bw = FALSE, ...)
 \item{title}{character string of desired plot title. Default is NULL}
 
 \item{bw}{boolean designating whether to plot in color (FALSE, default), or black and white (TRUE)}
+
+\item{result}{"Consumption" or "Emissions" - denotes whether plot displays energy consumption (in kWh) or CO2 emissions (in grams CO2)}
 
 \item{...}{passes arguments to clean_data()}
 }
