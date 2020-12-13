@@ -52,7 +52,6 @@ clean_enduse <- function(data){
 
 to_remove <- function(data){
   data2 <- data %>%
-    #dplyr::filter(stringr::str_detect(enduse, "Electricity")) %>%
     dplyr::filter(fuel == "Electricity" | enduse == "Electricity") %>%
     dplyr::group_by(fuel) %>%
     dplyr::summarize(mean_kWh = signif(sum(value), 5))

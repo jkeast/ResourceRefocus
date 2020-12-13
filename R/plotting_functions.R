@@ -146,6 +146,7 @@ plot_dualfuel_avgs <- function(csv, title = NULL, result = "Consumption", ...){
 #' @param baseline character string of path to csv containing data
 #' @param proposed character string of path to csv containing data to compare, or NULL (default)
 #' @param title character string of desired plot title. Default is NULL
+#' @param by_fuel designates whether to summarize data by fuel (the default) or omit fuel (NULL)
 #' @param result "Consumption" or "Emissions" - denotes whether plot displays energy consumption (in kWh) or CO2 emissions (in grams CO2)
 #' @param ... passes arguments to clean_data()
 #' @return Stacked barchart of enduses

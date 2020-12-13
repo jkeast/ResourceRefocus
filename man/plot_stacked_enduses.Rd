@@ -20,6 +20,8 @@ plot_stacked_enduses(
 
 \item{title}{character string of desired plot title. Default is NULL}
 
+\item{by_fuel}{designates whether to summarize data by fuel (the default) or omit fuel (NULL)}
+
 \item{result}{"Consumption" or "Emissions" - denotes whether plot displays energy consumption (in kWh) or CO2 emissions (in grams CO2)}
 
 \item{...}{passes arguments to clean_data()}
