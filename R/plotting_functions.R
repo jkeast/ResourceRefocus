@@ -30,7 +30,7 @@ plot_enduse_avgs <- function(csv, title = NULL, bw = FALSE, result = "Consumptio
     {if(result == "Emissions")ggplot2::labs(y="Emissions (lbs CO2e)")} +
 
     #customize fonts to those in RR style guide
-    ggplot2::theme(text = ggplot2::element_text(family = "Muli"),
+    ggplot2::theme(text = ggplot2::element_text(family = "Muli-Regular"),
           plot.title=ggplot2::element_text(family = "Roboto Slab", face="bold"))+
 
     #customize colors

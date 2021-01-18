@@ -92,6 +92,7 @@ convert <- function(num, conversion_factor = 3600000){
 #' @title clean_data
 #' @importFrom dplyr %>%
 #' @param csv character string of path to csv
+#' @param emissions_conversions character string of path to csv with tonne CO2-e/MWh and tonne CO2-e/therm conversion factors
 #' @param by_month designates whether to summarize data by month (the default) or omit month (NULL)
 #' @param by_enduse designates whether to summarize data by enduse (the default) or omit enduse (NULL)
 #' @param by_hour designates whether to summarize data by hour (the default) or omit hour (NULL)
@@ -100,14 +101,14 @@ convert <- function(num, conversion_factor = 3600000){
 #' @return Cleaned dataframe
 #' @export
 
-clean_data <- function(csv, by_month = month, by_enduse = enduse, by_hour = Hour, by_fuel = fuel, ...) {
+clean_data <- function(csv, emissions_conversions = NULL, by_month = month, by_enduse = enduse, by_hour = Hour, by_fuel = fuel, ...) {
   data <- readr::read_csv(csv) %>%
 
-    #join with emissions conversions
-    dplyr::full_join(readr::read_csv(system.file("extdata", "GHG_index_E3_2030.csv", package = "ResourceRefocus"))) %>%
+    #join with emissions conversions if relevant
+    {if(!is.null(emissions_conversions)) dplyr::full_join(.,readr::read_csv(emissions_conversions)) else .} %>%
 
     #transform to long data
-    reshape2::melt(id.vars = c("Date/Time", "tonne CO2-e/MWh", "tonne CO2-e/therm"), variable.name = "enduse") %>%
+    reshape2::melt(id.vars = {if(!is.null(emissions_conversions)) c("Date/Time", "tonne CO2-e/MWh", "tonne CO2-e/therm") else c("Date/Time")}, variable.name = "enduse") %>%
 
 
     dplyr::mutate(
@@ -120,11 +121,12 @@ clean_data <- function(csv, by_month = month, by_enduse = enduse, by_hour = Hour
            fuel = stringr::str_extract(enduse, "[\\w]*(?= \\[)"),
 
            #convert units appropriately
-           value = convert(value, ...),
+           value = convert(value, ...)) %>%
 
-           CO2e = dplyr::case_when(
+    {if(!is.null(emissions_conversions)) dplyr::mutate(., CO2e = dplyr::case_when(
              fuel == "Gas" ~ convert(value, 105480400)*`tonne CO2-e/therm`*2204.6,
-             TRUE ~ convert(value)*1000*`tonne CO2-e/MWh`*2204.6))%>%
+             TRUE ~ convert(value)*1000*`tonne CO2-e/MWh`*2204.6)) else .}%>%
+
         #clean all enduses
         clean_enduse()
 
@@ -140,9 +142,11 @@ clean_data <- function(csv, by_month = month, by_enduse = enduse, by_hour = Hour
     dplyr::mutate(enduse = dplyr::case_when(
       enduse %in% unique(dplyr::filter(data, fuel == "Electricity")$enduse) & fuel == "Gas" ~ stringr::str_c(enduse, "-Gas"),
       TRUE ~ enduse)) %>%
-    dplyr::select(value, CO2e, {{by_hour}}, {{by_month}}, {{by_enduse}}, {{by_fuel}}) %>%
+   {if(!is.null(emissions_conversions)) dplyr::select(., value, CO2e, {{by_hour}}, {{by_month}}, {{by_enduse}}, {{by_fuel}})
+     else dplyr::select(., value, {{by_hour}}, {{by_month}}, {{by_enduse}}, {{by_fuel}})}%>%
     dplyr::group_by({{by_hour}}, {{by_month}}, {{by_enduse}}, {{by_fuel}}) %>%
-    dplyr::summarize(kWh = mean(value), mean_CO2e = mean(CO2e), sum_kWh = sum(value), sum_CO2e = sum(CO2e))
+    {if(!is.null(emissions_conversions)) dplyr::summarize(., kWh = mean(value), mean_CO2e = mean(CO2e), sum_kWh = sum(value), sum_CO2e = sum(CO2e))
+      else dplyr::summarize(., kWh = mean(value), sum_kWh = sum(value))}
 
 
 }
