@@ -46,7 +46,7 @@ plot_enduse_avgs <- function(csv, title = NULL, bw = FALSE, result = "Consumptio
 #' @param title character string of desired plot title. Default is NULL
 #' @param result "Consumption" or "Emissions" - denotes whether plot displays energy consumption (in kWh) or CO2 emissions (in grams CO2)
 #' @param ... passes arguments to clean_data()
-#' @return line plot comparing two models
+#' @return line plot displaying emissions or energy consumption of one model
 #' @export
 
 plot_model <- function(model, title = NULL, result = "Consumption", ...){
@@ -72,7 +72,21 @@ plot_model <- function(model, title = NULL, result = "Consumption", ...){
                    plot.title=ggplot2::element_text(family = "Roboto Slab", face="bold"))
 }
 
+#' @name plot_emissions
+#' @title plot_emissions
+#' @importFrom dplyr %>%
+#' @importFrom ggplot2 aes
+#' @param model character string of path to csv containing model data
+#' @param emissions_conversions character string of path to csv with tonne CO2-e/MWh and tonne CO2-e/therm conversion factors
+#' @param ... passes arguments to plot_model()
+#' @return line plot displaying emissions of one model
+#' @export
 
+plot_emissions <- function(model, ...){
+
+plot_model(model, result = "Emissions", ...)
+
+}
 
 #' @name plot_comps
 #' @title plot_comps

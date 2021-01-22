@@ -16,7 +16,7 @@ plot_model(model, title = NULL, result = "Consumption", ...)
 \item{...}{passes arguments to clean_data()}
 }
 \value{
-line plot comparing two models
+line plot displaying emissions or energy consumption of one model
 }
 \description{
 plot_model

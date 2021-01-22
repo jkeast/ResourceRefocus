@@ -224,6 +224,20 @@ plot_model(baseline_csv, by_month = NULL, title = "Placeholder Title", result = 
 
 <img src="man/figures/README-unnamed-chunk-9-4.png" width="100%" />
 
+`plot_emissions()` is identical to `plot_model()` except that it only plots emissions – no need to specify result.
+
+``` r
+plot_emissions(baseline_csv, title = "Placeholder Title", emissions_conversions = CO2_conversions)
+```
+
+<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
+
+``` r
+plot_emissions(baseline_csv, title = "Placeholder Title", emissions_conversions = CO2_conversions, by_month = NULL)
+```
+
+<img src="man/figures/README-unnamed-chunk-10-2.png" width="100%" />
+
 #### Compare different models
 
 `plot_comps()` shows the comparison of a baseline model to proposed. It takes the following arguments:
@@ -239,31 +253,31 @@ and passes `by_month` and `conversion_factor` (and `emissions_conversions` if ap
 plot_comps(baseline_csv, proposed_csv, title = "Placeholder Title")
 ```
 
-<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
 
 ``` r
 plot_comps(baseline_csv, proposed_csv, title = "Placeholder Title", result = "Emissions", emissions_conversions = CO2_conversions)
 ```
 
-<img src="man/figures/README-unnamed-chunk-10-2.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-11-2.png" width="100%" />
 
 ``` r
 plot_comps(baseline_csv, proposed_csv, by_month = NULL, title = "Placeholder Title")
 ```
 
-<img src="man/figures/README-unnamed-chunk-10-3.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-11-3.png" width="100%" />
 
 ``` r
 plot_comps(baseline_csv, proposed_csv, by_month = NULL, title = "Placeholder Title", result = "Emissions", emissions_conversions = CO2_conversions)
 ```
 
-<img src="man/figures/README-unnamed-chunk-10-4.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-11-4.png" width="100%" />
 
 ``` r
 plot_comps(baseline_csv, proposed_csv, by_month = NULL, title = "Placeholder Title", bw = TRUE)
 ```
 
-<img src="man/figures/README-unnamed-chunk-10-5.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-11-5.png" width="100%" />
 
 #### Plot End-use Averages
 
@@ -279,25 +293,25 @@ and passes `by_month` and `conversion_factor` to `clean_data()`, which it calls 
 plot_enduse_avgs(baseline_csv, title = "Placeholder Title")
 ```
 
-<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
 
 ``` r
 plot_enduse_avgs(baseline_csv, by_month = NULL, title = "Placeholder Title")
 ```
 
-<img src="man/figures/README-unnamed-chunk-11-2.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-12-2.png" width="100%" />
 
 ``` r
 plot_enduse_avgs(baseline_csv, by_month = NULL, title = "Placeholder Title", result = "Emissions", emissions_conversions = CO2_conversions)
 ```
 
-<img src="man/figures/README-unnamed-chunk-11-3.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-12-3.png" width="100%" />
 
 ``` r
 plot_enduse_avgs(baseline_csv, title = "Placeholder Title", by_month = NULL, bw = TRUE)
 ```
 
-<img src="man/figures/README-unnamed-chunk-11-4.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-12-4.png" width="100%" />
 
 #### Plot Dual-Fuel Averages
 
@@ -312,13 +326,13 @@ and passes `by_month` and `conversion_factor` to `clean_data()`, which it calls 
 plot_dualfuel_avgs(dualfuel_csv, title = "Placeholder Title", by_month = NULL)
 ```
 
-<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-13-1.png" width="100%" />
 
 ``` r
 plot_dualfuel_avgs(dualfuel_csv, title = "Placeholder Title", result = "Emissions", by_month = NULL, emissions_conversions = CO2_conversions)
 ```
 
-<img src="man/figures/README-unnamed-chunk-12-2.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-13-2.png" width="100%" />
 
 #### End Use Averages Barcharts
 

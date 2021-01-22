@@ -124,6 +124,14 @@ plot_model(baseline_csv, by_month = NULL, title = "Placeholder Title")
 plot_model(baseline_csv, by_month = NULL, title = "Placeholder Title", result = "Emissions", emissions_conversions = CO2_conversions)
 ```
 
+`plot_emissions()` is identical to `plot_model()` except that it only plots emissions – no need to specify result.
+
+```{r, message = FALSE}
+plot_emissions(baseline_csv, title = "Placeholder Title", emissions_conversions = CO2_conversions)
+plot_emissions(baseline_csv, title = "Placeholder Title", emissions_conversions = CO2_conversions, by_month = NULL)
+```
+
+
 #### Compare different models
 
 `plot_comps()` shows the comparison of a baseline model to proposed. It takes the following arguments:
