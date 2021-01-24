@@ -346,9 +346,40 @@ plot_dualfuel_avgs(dualfuel_csv, title = "Placeholder Title", result = "Emission
 and passes `by_month` and `conversion_factor` to `clean_data()`, which it calls automatically.
 
 ``` r
-#plot_stacked_enduses(baseline_csv, proposed_csv, title = "Placeholder Title", by_month = NULL, by_fuel = NULL)
-#plot_stacked_enduses(baseline_csv, proposed_csv, title = "Placeholder Title", by_month = NULL, by_fuel = NULL, result = "Emissions", emissions_conversions = CO2_conversions)
-#plot_stacked_enduses(baseline_csv, proposed_csv, title = "Placeholder Title", by_fuel = NULL)
-#plot_stacked_enduses(dualfuel_csv, title = "Placeholder Title", by_month = NULL)
-#plot_stacked_enduses(dualfuel_csv, title = "Placeholder Title")
+plot_stacked_enduses(baseline_csv, proposed_csv, title = "Placeholder Title", by_month = NULL, by_fuel = NULL)
+#> Warning: Ignoring unknown parameters: identity
 ```
+
+<img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" />
+
+``` r
+plot_stacked_enduses(baseline_csv, proposed_csv, title = "Placeholder Title", by_month = NULL, by_fuel = NULL, result = "Emissions", emissions_conversions = CO2_conversions)
+#> Warning: Ignoring unknown parameters: identity
+```
+
+<img src="man/figures/README-unnamed-chunk-14-2.png" width="100%" />
+
+``` r
+plot_stacked_enduses(baseline_csv, proposed_csv, title = "Placeholder Title", by_fuel = NULL)
+#> Warning: Ignoring unknown parameters: identity
+```
+
+<img src="man/figures/README-unnamed-chunk-14-3.png" width="100%" />
+
+``` r
+plot_stacked_enduses(dualfuel_csv, title = "Placeholder Title", by_month = NULL)
+#> Warning: Ignoring unknown parameters: identity
+
+#> Warning: Ignoring unknown parameters: identity
+```
+
+<img src="man/figures/README-unnamed-chunk-14-4.png" width="100%" />
+
+``` r
+plot_stacked_enduses(dualfuel_csv, title = "Placeholder Title")
+#> Warning: Ignoring unknown parameters: identity
+
+#> Warning: Ignoring unknown parameters: identity
+```
+
+<img src="man/figures/README-unnamed-chunk-14-5.png" width="100%" />

@@ -194,9 +194,9 @@ plot_dualfuel_avgs(dualfuel_csv, title = "Placeholder Title", result = "Emission
 and passes `by_month` and `conversion_factor` to `clean_data()`, which it calls automatically.
 
 ```{r, message=FALSE}
-#plot_stacked_enduses(baseline_csv, proposed_csv, title = "Placeholder Title", by_month = NULL, by_fuel = NULL)
-#plot_stacked_enduses(baseline_csv, proposed_csv, title = "Placeholder Title", by_month = NULL, by_fuel = NULL, result = "Emissions", emissions_conversions = CO2_conversions)
-#plot_stacked_enduses(baseline_csv, proposed_csv, title = "Placeholder Title", by_fuel = NULL)
-#plot_stacked_enduses(dualfuel_csv, title = "Placeholder Title", by_month = NULL)
-#plot_stacked_enduses(dualfuel_csv, title = "Placeholder Title")
+plot_stacked_enduses(baseline_csv, proposed_csv, title = "Placeholder Title", by_month = NULL, by_fuel = NULL)
+plot_stacked_enduses(baseline_csv, proposed_csv, title = "Placeholder Title", by_month = NULL, by_fuel = NULL, result = "Emissions", emissions_conversions = CO2_conversions)
+plot_stacked_enduses(baseline_csv, proposed_csv, title = "Placeholder Title", by_fuel = NULL)
+plot_stacked_enduses(dualfuel_csv, title = "Placeholder Title", by_month = NULL)
+plot_stacked_enduses(dualfuel_csv, title = "Placeholder Title")
 ```
