@@ -6,6 +6,7 @@
 \usage{
 clean_data(
   csv,
+  emissions_conversions = NULL,
   by_month = month,
   by_enduse = enduse,
   by_hour = Hour,
@@ -15,6 +16,8 @@ clean_data(
 }
 \arguments{
 \item{csv}{character string of path to csv}
+
+\item{emissions_conversions}{character string of path to csv with tonne CO2-e/MWh and tonne CO2-e/therm conversion factors}
 
 \item{by_month}{designates whether to summarize data by month (the default) or omit month (NULL)}
 

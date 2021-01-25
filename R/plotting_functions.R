@@ -30,14 +30,63 @@ plot_enduse_avgs <- function(csv, title = NULL, bw = FALSE, result = "Consumptio
     {if(result == "Emissions")ggplot2::labs(y="Emissions (lbs CO2e)")} +
 
     #customize fonts to those in RR style guide
-    ggplot2::theme(text = ggplot2::element_text(family = "Muli"),
-          plot.title=ggplot2::element_text(family = "Roboto Slab", face="bold"))+
+    ggplot2::theme(text = ggplot2::element_text(family = choose_font(c("Muli", "sans"))),
+          plot.title=ggplot2::element_text(family = choose_font(c("Roboto Slab", "serif")), face="bold"))+
 
     #customize colors
     {if(bw)ggplot2::scale_color_grey(start = 0, end = .8)} +
     {if(!bw)ggplot2::scale_color_manual(values = plot_colors(data))}
 }
 
+#' @name plot_model
+#' @title plot_model
+#' @importFrom dplyr %>%
+#' @importFrom ggplot2 aes
+#' @param model character string of path to csv containing model data
+#' @param title character string of desired plot title. Default is NULL
+#' @param result "Consumption" or "Emissions" - denotes whether plot displays energy consumption (in kWh) or CO2 emissions (in grams CO2)
+#' @param ... passes arguments to clean_data()
+#' @return line plot displaying emissions or energy consumption of one model
+#' @export
+
+plot_model <- function(model, title = NULL, result = "Consumption", ...){
+
+  data <- clean_data(model, by_fuel = NULL, by_enduse = NULL, ...)
+
+  #create line plot
+  ggplot2::ggplot(data, aes(x=Hour)) + ggplot2::geom_line(size = 1.05, color = "#257BA0") +
+  {if(result == "Emissions")aes(y=mean_CO2e)} +
+  {if(result == "Consumption")aes(y=kWh)} +
+    ggplot2::theme_bw() +
+
+    #add month as facet if in data
+    {if("month" %in% colnames(data))ggplot2::facet_wrap(~month)} +
+
+    #make breaks align with day breaks and clean labels
+    ggplot2::scale_x_continuous(breaks=c(1, 6, 12, 18, 24))+
+    ggplot2::labs(title = title, subtitle = stringr::str_c("Average Hourly Total ", result), y = "kWh") +
+    {if(result == "Emissions")ggplot2::labs(y="Emissions (lbs CO2e)")} +
+
+    #customize fonts to those in RR style guide
+    ggplot2::theme(text = ggplot2::element_text(family = choose_font(c("Muli", "sans"))),
+                   plot.title=ggplot2::element_text(family = choose_font(c("Roboto Slab", "serif")), face="bold"))
+}
+
+#' @name plot_emissions
+#' @title plot_emissions
+#' @importFrom dplyr %>%
+#' @importFrom ggplot2 aes
+#' @param model character string of path to csv containing model data
+#' @param emissions_conversions character string of path to csv with tonne CO2-e/MWh and tonne CO2-e/therm conversion factors
+#' @param ... passes arguments to plot_model()
+#' @return line plot displaying emissions of one model
+#' @export
+
+plot_emissions <- function(model, ...){
+
+plot_model(model, result = "Emissions", ...)
+
+}
 
 #' @name plot_comps
 #' @title plot_comps
@@ -76,8 +125,8 @@ plot_comps <- function(baseline, proposed, title = NULL, bw = FALSE, result = "C
     {if(result == "Emissions")ggplot2::labs(y="Emissions (lbs CO2e)")} +
 
     #customize fonts to those in RR style guide
-    ggplot2::theme(text = ggplot2::element_text(family = "Muli"),
-          plot.title=ggplot2::element_text(family = "Roboto Slab", face="bold")) +
+    ggplot2::theme(text = ggplot2::element_text(family = choose_font(c("Muli", "sans"))),
+          plot.title=ggplot2::element_text(family = choose_font(c("Roboto Slab", "serif")), face="bold")) +
 
     #customize colors to those in RR style guide
     {if(!bw)ggplot2::scale_color_manual(values = c("#257BA0", "#93B83D"))}
@@ -127,8 +176,8 @@ plot_dualfuel_avgs <- function(csv, title = NULL, result = "Consumption", ...){
     {if(result == "Emissions")ggplot2::labs(y="Emissions (lbs CO2e)")} +
 
     #customize fonts to those in RR style guide
-    ggplot2::theme(text = ggplot2::element_text(family = "Muli"),
-          plot.title=ggplot2::element_text(family = "Roboto Slab", face="bold"))+
+    ggplot2::theme(text = ggplot2::element_text(family = choose_font(c("Muli", "sans"))),
+          plot.title=ggplot2::element_text(family = choose_font(c("Roboto Slab", "serif")), face="bold"))+
 
     #set plot linetype to match fuel
     ggplot2::scale_linetype_manual(values = c("22","solid"))+
@@ -193,7 +242,7 @@ plot_stacked_enduses <- function(baseline, proposed = NULL, title = NULL, by_fue
 
     {if("fuel" %in% colnames(data))ggplot2::labs(y="kBtu")}+
     {if(result == "Emissions")ggplot2::labs(y="Emissions (lbs CO2e)")} +
-    ggplot2::theme(text = ggplot2::element_text(family = "Muli"),
-          plot.title=ggplot2::element_text(family = "Roboto Slab", face="bold"))+
+    ggplot2::theme(text = ggplot2::element_text(family = choose_font(c("Muli", "sans"))),
+          plot.title=ggplot2::element_text(family = choose_font(c("Roboto Slab", "serif")), face="bold"))+
     {if("fuel" %in% colnames(data))ggplot2::guides(fill = ggplot2::guide_legend(override.aes = list(pattern = plot_linetypes(data, "pattern"))))}
 }
